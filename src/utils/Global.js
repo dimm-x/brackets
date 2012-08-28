@@ -47,6 +47,80 @@ define(function (require, exports, module) {
     if (!global.brackets) {
         global.brackets = {};
     }
+
+    // Import node's fs module
+    var nodeFs = window.nodeRequire('fs');
+    
+    // Adapt to brackets's API
+    global.brackets.fs = {
+      NO_ERROR: 0,
+      ERR_UNKNOWN: 1,
+      ERR_INVALID_PARAMS: 2,
+      ERR_NOT_FOUND: 3,
+      ERR_CANT_READ: 4,
+      ERR_UNSUPPORTED_ENCODING: 5,
+      ERR_CANT_WRITE: 6,
+      ERR_OUT_OF_SPACE:7,
+      ERR_NOT_FILE: 8,
+      ERR_NOT_DIRECTORY: 9,
+
+      readFile: function(path, encoding, callback) {
+        nodeFs.readFile(path, encoding, function(err, content) {
+          err = err ? err.code : global.brackets.fs.NO_ERROR;
+          if (callback) callback(err, content);
+        });
+      },
+
+      writeFile: function(path, data, encoding, callback) {
+        nodeFs.writeFile(path, data, encoding, function(err) {
+          err = err ? err.code : global.brackets.fs.NO_ERROR;
+          if (callback) callback(err);
+        });
+      },
+
+      chmod: function(path, mode, callback) {
+        nodeFs.chmod(path, mode, function(err) {
+          err = err ? err.code : global.brackets.fs.NO_ERROR;
+          if (callback) callback(err);
+        });
+      },
+
+      unlink: function(path, callback) {
+        nodeFs.unlink(path, function(err) {
+          err = err ? err.code : global.brackets.fs.NO_ERROR;
+          if (callback) callback(err);
+        });
+      },
+
+      stat: function(path, callback) {
+        nodeFs.stat(path, function(err, stats) {
+          err = err ? err.code : global.brackets.fs.NO_ERROR;
+          if (callback) callback(err, stats);
+        });
+      },
+
+      readdir: function(path, callback) {
+        nodeFs.readdir(path, function(err, files) {
+          err = err ? err.code : global.brackets.fs.NO_ERROR;
+          if (callback) callback(err, files);
+        });
+      },
+    };
+
+    // Other symbols
+    for (var i in nodeFs) {
+      var func = nodeFs[i];
+      if (!func in global.brackets.fs) {
+        global.brackets.fs[func] = func;
+      }
+    }
+
+    // Stub functions
+    global.brackets.app = {
+        getElapsedMilliseconds: function() {
+            return process.uptime;
+        }
+    };
         
     // Uncomment the following line to force all low level file i/o routines to complete
     // asynchronously. This should only be done for testing/debugging.

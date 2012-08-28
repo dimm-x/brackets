@@ -69,7 +69,7 @@ define(function (require, exports, module) {
         // to a file in /refs which in turn contains the SHA
         fileEntry.file(function (file) {
             reader.onload = function (event) {
-                var text = event.target.result;
+                var text = String(event.target.result);
                 
                 if (text.indexOf("ref: ") === 0) {
                     var basePath = path.substr(0, path.lastIndexOf("/"));

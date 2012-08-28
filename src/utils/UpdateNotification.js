@@ -343,7 +343,7 @@ define(function (require, exports, module) {
     }
     
     // Append locale to version info URL
-    _versionInfoURL += (window.localStorage.getItem("locale") || brackets.app.language) + ".json";
+    _versionInfoURL += navigator.language + ".json";
     
     // Define public API
     exports.checkForUpdate = checkForUpdate;

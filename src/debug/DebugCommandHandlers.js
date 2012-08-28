@@ -281,7 +281,7 @@ define(function (require, exports, module) {
     
     // Show Developer Tools (optionally enabled)
     CommandManager.register(Strings.CMD_SHOW_DEV_TOOLS,      Commands.DEBUG_SHOW_DEVELOPER_TOOLS,   handleShowDeveloperTools)
-        .setEnabled(!!brackets.app.showDeveloperTools);
+        .setEnabled(false);
     CommandManager.register(Strings.CMD_NEW_BRACKETS_WINDOW, Commands.DEBUG_NEW_BRACKETS_WINDOW,    _handleNewBracketsWindow);
     CommandManager.register(Strings.CMD_SHOW_EXTENSIONS_FOLDER, Commands.DEBUG_SHOW_EXT_FOLDER,     _handleShowExtensionsFolder);
     

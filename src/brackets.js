@@ -34,7 +34,7 @@ require.config({
     // NOTE: When we change to navigator.language here, we also should change to
     // navigator.language in ExtensionLoader (when making require contexts for each
     // extension).
-    locale: window.localStorage.getItem("locale") || brackets.app.language
+    locale: navigator.language
 });
 
 /**
